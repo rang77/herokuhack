@@ -50,5 +50,23 @@ if __name__ == '__main__':
     handler.setLevel(logging.INFO)
     app.logger.addHandler(handler)
     app.run()
+	
+@app.route('/accounts')
+def accounts():
+    try:
+        my_list = []
+        if cur != None:
+            cur.execute("""SELECT name from salesforce.account""")
+            rows = cur.fetchall()
+            response = ''
+            
+            for row in rows:
+                my_list.append(row[0])
+
+        return render_template('template.html',  results=my_list)
+    except Exception as e:
+        print e
+        return []
+
 
 	
